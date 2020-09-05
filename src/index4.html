@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.7.1/svg.min.js"></script>
+</head>
+<body>
+  123
+  <input type="file" id="file" />
+  <div id="drawing"></div>
+  <button id="zoomout">放大</button>
+  <button id="zoomin">缩小</button>
+</body>
+<script>
+  const start = Date.now();
+  let count = 2 ** 31;
+  console.log(count);
+  while(count > 0) {
+    count--
+  }
+  const end = Date.now();
+  console.log(end - start);
+</script>
+<script>
+  // var draw = SVG('drawing')
+  // // var rect = draw.rect(100, 100).attr({ stroke: '#f06' })
+  // let polyline = draw.polyline([[0,0],[100,50],[50,200]]).fill('none').stroke({ width: 1 })
+  
+  const draw = SVG('drawing');
+  let polyline;
+  let totalPx;
+  let height = 128;
+
+  const waveform = {
+    readFileAsBuffer (file) {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        return new Promise((resolve, reject) => {
+            reader.onload = evt => {
+                resolve(evt.currentTarget.result)
+            };
+            reader.onerror = evt => {
+                reject(evt);
+            };
+        })
+    },
+    async onAudioChange (evt) {
+        const target = evt.target;
+        const file = target.files[0];
+        // const audio = this.$refs.audio;
+        target.value = '';
+        const fileArrayBuffer = await this.readFileAsBuffer(file);
+        // console.log(fileArrayBuffer)
+        this.displayWaveForm(fileArrayBuffer)
+    },
+    getAudioContext() {
+        return (window.AudioContext || 
+          window.webkitAudioContext || 
+          window.mozAudioContext || 
+          window.oAudioContext || 
+          window.msAudioContext);
+    },
+    displayWaveForm (fileArrayBuffer) {
+        // AUDIO CONTEXT
+        const AC = this.getAudioContext();
+
+        var audioContext = new AC();
+        console.log(fileArrayBuffer)
+        audioContext.decodeAudioData(fileArrayBuffer, 
+            (buffer) => {
+                console.log(buffer)
+                this.displayBuffer(buffer);
+                const dataSource = audioContext.createBufferSource();
+                dataSource.buffer = buffer;
+                dataSource.connect(audioContext.destination);
+                dataSource.start();
+                // drawBuffer.canvas(this.$refs.canvas, buffer, 'blue');
+            }, this.onDecodeError);
+    },
+    onDecodeError (err) {
+        console.log(err);
+    },
+    getPeaks(buffer, totalPx) {
+        const { duration, numberOfChannels, sampleRate, length} = buffer;
+
+        const first =  0;
+        const last = totalPx - 1;
+
+        const sampleSize = length / totalPx;
+        const sampleStep = ~~(sampleSize / 10) || 1;
+
+        const peaks = [];
+
+        // 只取左声道
+        const chan = buffer.getChannelData(0);
+
+        for (let i = first; i <= last; i++) {
+            const start = ~~(i * sampleSize);
+            const end = ~~(start + sampleSize);
+            let min = 0;
+            let max = 0;
+            let j;
+
+            for (j = start; j < end; j += sampleStep) {
+                const value = chan[j];
+
+                if (value > max) {
+                    max = value;
+                }
+
+                if (value < min) {
+                    min = value;
+                }
+            }
+            peaks[2 * i] = max;
+            peaks[2 * i + 1] = min;
+        }
+
+        return peaks;
+    },
+    displayBuffer(buff /* is an AudioBuffer */) {
+      const { duration, numberOfChannels, sampleRate, length} = buff;
+      const leftChannelData = buff.getChannelData(0);
+      const perSecPx = 100;
+      const halfHight = height / 2;
+      const absmaxHalf = 1 / halfHight;
+      totalPx = 1000;
+      let start = Date.now();
+      const peaks = this.getPeaks(buff, totalPx);
+      draw.size(totalPx, height);
+      const points = [];
+      for (let i = 0; i < peaks.length; i += 2 ) {
+        const peak1 = peaks[i] || 0;
+        const peak2 = peaks[i + 1] || 0;
+        const h1 = Math.round(peak1 / absmaxHalf);
+        const h2 = Math.round(peak2 / absmaxHalf);
+        points.push([i, halfHight - h1]);
+        points.push([i, halfHight - h2]);
+      }
+      let end = Date.now();
+      polyline = draw.polyline(points);
+      polyline.fill('none').stroke({ width: 1 });
+      console.log(end - start)
+    },
+  }
+  const fileRef = document.getElementById('file');
+  fileRef.addEventListener('change', (evt) => {
+    waveform.onAudioChange(evt);
+  })
+
+  const zoominRef = document.getElementById('zoomin');
+  const zoomoutRef = document.getElementById('zoomout');
+  zoominRef.addEventListener('click', () => {
+
+    // polyline.transform({scaleX: 1})
+    // polyline.stroke({ width: 0.1 });
+    // polyline.scale(0.5, 1);
+    // draw.size(totalPx / 2, 300);
+    // polyline.cx(0);
+    // console.log(polyline.bbox())
+    scaleX /= 2;
+    console.log(`缩小至：${scaleX}`)
+    scale(polyline, scaleX)
+  })
+  let scaleX = 1;
+  zoomoutRef.addEventListener('click', () => {
+    scaleX *= 2;
+    console.log(`放大到：${scaleX}`)
+    // polyline.transform({scaleX: scaleX})
+    // polyline.scale(2, 1);
+    const start = Date.now();
+    scale(polyline, scaleX)
+    console.log(Date.now() - start);
+    // polyline.transform({
+    //   scaleX: 2,
+    // })
+    // polyline.stroke({ width: 1 / scaleX });
+  })
+  
+  const scale = (element, s) => {
+    // const box = element.bbox();
+    // const { width } = box;
+    draw.width(totalPx * s)
+    polyline.width(totalPx * s)
+  }
+  
+</script>
+</html>

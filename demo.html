@@ -1,0 +1,61 @@
+<script type="text/javascript" src="http://id.163yun.com/sdk/nep-0.1.1.min.js"></script>
+<script>
+var
+  nep = new NEP({ 
+      //callback of 
+      onLogin: function(token){
+          nep._$hide();
+      },
+      //callback of logout
+      onLogout: function(result){
+          
+      },
+      //hide: true,//初始化隐藏登录框
+      //registerUrl: ''//注册按钮跳转URL
+  })
+
+  //prototype api
+  
+  /**
+   * _$hide
+   * desc: hide dialog
+   * example: nep._$hide()
+   **/
+
+   /**
+   * _$show
+   * desc: show dialog
+   * example: nep._$show()
+   **/
+
+   /**
+   * _$close
+   * desc: destroy  dialog
+   * example: nep._$close()
+   **/
+
+  /**
+   * _$logout
+   * desc: logout
+   * example: nep._$logout(function (result) {
+     if (result === true) {
+       console.log('logout successful')
+     } else {
+       console.log('logout fail')
+     }
+   })
+   **/
+
+   /**
+   * _$getToken
+   * desc: get the token info
+   * example: nep._$getToken(function (token) {
+     console.log(token)
+   })
+   **/
+
+   /**
+    * GOOD LUCK : )
+   */
+
+</script>

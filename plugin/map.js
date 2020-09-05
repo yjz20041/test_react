@@ -1,0 +1,25 @@
+module.exports = {
+  'object.assign': 'Object.assign',
+  'object.create': 'Object.create',
+  'object.define-property': 'Object.defineProperty',
+  'object.define-properties': 'Object.defineProperties',
+  'object.entries': 'Object.entries',
+  'object.freeze': 'Object.freeze',
+  'object.from-entries': 'Object.fromEntries',
+  'get-own-property-descriptor': 'Object.getOwnPropertyDescriptor',
+  'object.get-own-property-descriptors': 'Object.getOwnpropertyDescriptors',
+  'object.get-own-property-names': 'Object.getOwnPropertyNames',
+  'object.get-prototype-of': 'Object.getPrototypeOf',
+  'object.set-prototype-of': 'Object.setPrototypeOf',
+  'object.is': 'Object.is',
+  'object.is-extensible': 'Object.isExtensible',
+  'object.is-frozen': 'Object.isFrozen',
+  'object.is-sealed': 'Object.isSealed',
+  'object.seal': 'Object.seal',
+  'object.keys': 'Object.keys',
+  'object.values': 'Object.values',
+  'object.prevent-extensions': 'Object.preventExtensions',
+  
+  'function.bind': 'Function.prototype.bind',
+  'function.name': 'Function.prototype.name'
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" 
+    content="width=600,initial-scale=0.5, maximum-scale=100, minimum-scale=0.1" />
+  <title>Document</title>
+  <!-- <script src="https://music.cloud1001.cn/repo/polyfill.js"></script> -->
+  <script src="http://10.242.231.98:8003/polyfill.min.js?v=1.129"></script>
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=all"></script> -->
+</head>
+<body>
+  <div  style="background: green; width: 100px;">
+    12312312312
+    <button id="test">click</button>
+  </div>
+  
+  <script>
+    // if (true) {
+    //   document.write('<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"><\/script>')
+    // }
+    function testPolyfill() {
+      const features = [
+        'Object.create',
+        'Object.defineProperty',
+        'Object.defineProperties',
+        'Object.assign',
+        'Object.is',
+        'Object.setPrototypeOf',
+        'Object.getPrototypeOf',
+        'Object.freeze',
+        'Object.isFrozen',
+        'Object.seal',
+        'Object.isSealed',
+        'Object.preventExtensions',
+        'Object.isExtensible',
+        'Object.getOwnPropertyDescriptor',
+        'Object.getOwnPropertyDescriptors',
+        'Object.keys',
+        'Object.values',
+        'Object.entries',
+        'Object.fromEntries',
+        'Object.getOwnPropertyNames',
+
+        'Function.prototype.name',
+        'Function.prototype.bind',
+
+        'Array.from',
+        'Array.isArray',
+        'Array.of',
+        'Array.prototype.copyWithin',
+        'Array.prototype.fill',
+        'Array.prototype.find',
+        'Array.prototype.findIndex',
+        'Array.prototype.Symbol.iterator',
+        'Array.prototype.includes',
+        'Array.prototype.slice',
+        'Array.prototype.join',
+        'Array.prototype.indexOf',
+        'Array.prototype.lastIndexOf',
+        'Array.prototype.every',
+        'Array.prototype.some',
+        'Array.prototype.forEach',
+        'Array.prototype.map',
+        'Array.prototype.filter',
+        'Array.prototype.reduce',
+        'Array.prototype.reduceRight',
+        'Array.prototype.reverse',
+        'Array.prototype.sort',
+        'Array.prototype.flat',
+        'Array.prototype.flatMap',
+
+        'String.fromCodePoint',
+        'String.prototype.codePointAt',
+        'String.prototype.Symbol.iterator',
+        'String.prototype.split',
+        'String.prototype.startsWith',
+        'String.prototype.endsWith',
+        'String.prototype.includes',
+        'String.prototype.repeat',
+        'String.prototype.padStart',
+        'String.prototype.padEnd',
+        'String.prototype.trim',
+        'String.raw',
+
+        'RegExp.prototype.flags',
+
+        'Number.EPSILON',
+        'Number.isFinite',
+        'Number.isInteger',
+        'Number.isNaN',
+        'Number.MAX_SAFE_INTEGER',
+        'Number.MIN_SAFE_INTEGER',
+        'Number.parseFloat',
+        'Number.parseInt',
+
+        'Math.cosh',
+        'Math.acosh',
+        'Math.sinh',
+        'Math.asinh',
+        'Math.tanh',
+        'Math.atanh',
+        'Math.sign',
+        'Math.cbrt',
+        'Math.clz32',
+        'Math.expm1',
+        'Math.fround',
+        'Math.hypot',
+        'Math.imul',
+        'Math.log1p',
+        'Math.log2',
+        'Math.trunc',
+
+        'Date.prototype.toString',
+        'Date.prototype.toISOString',
+        'Date.now',
+
+        'Promise',
+        'Promise.prototype.finally',
+
+        'Symbol',
+        'Symbol.hasInstance',
+        'Symbol.isConcatSpreadable',
+        'Symbol.iterator',
+        'Symbol.match',
+        'Symbol.replace',
+        'Symbol.search',
+        'Symbol.split',
+        'Symbol.species',
+        'Symbol.toPrimitive',
+        'Symbol.toStringTag',
+        'Symbol.unscopables',
+        'Symbol.for',
+        'Symbol.keyFor',
+        // 'Symbol.prototype.description',
+
+        'Reflect.apply',
+        'Reflect.constructor',
+        'Reflect.defineProperty',
+        'Reflect.deleteProperty',
+        'Reflect.get',
+        'Reflect.getOwnPropertyDescriptor',
+        'Reflect.getPrototypeOf',
+        'Reflect.has',
+        'Reflect.isExtensible',
+        'Reflect.ownKeys',
+        'Reflect.preventExtensions',
+        'Reflect.set',
+        'Reflect.setPrototypeOf',
+
+        'Map',
+        'WeakMap',
+
+        'Set',
+        'WeakSet',
+
+        'URL',
+
+        'regeneratorRuntime'
+      ];
+      var feature, prop, keyArr, g, errors = [];
+      for (var i = 0; i < features.length; i ++) {
+        feature = features[i];
+        keyArr = feature.split('.');
+        g = window;
+        for (var j = 0; j < keyArr.length; j ++) {
+          prop = keyArr[j];
+          try {
+            if (prop === 'Symbol' && keyArr[j - 1]) {
+              j++;
+              prop = Symbol[keyArr[j]];
+            }
+            if (g[prop] === undefined) {
+              errors.push(feature);
+              break;
+            }
+            g = g[prop];
+          } catch(e) {
+            if (feature !== 'Symbol.prototype.description' || Symbol('a').description === undefined) {
+                errors.push(feature);
+                console.log(e)
+            }
+            break;
+          }
+        }
+      }
+      console.log(errors)
+      if (errors.length) {
+        alert(JSON.stringify(errors))
+      } else {
+        alert('polyfill检查通过')
+      }
+    }
+    // testPolyfill();
+    // try {
+    //   Object.defineProperty(Function.prototype, 'name', {
+    //     get: function(){
+    //       return 'a'
+    //     }
+    //   })
+    //   alert(2)
+    // }catch(e){
+    //   alert(e)
+    // }
+    // alert(Object.assign)
+  </script>
+  <script>
+    // alert(window.$)
+  </script>
+</body>
+</html>

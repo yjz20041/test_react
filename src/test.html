@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+  网易云登录组件API
+  </title>
+  <script type="text/javascript" src="https://id.163yun.com/sdk/nep-0.1.0.min.js"></script>
+  <script type="text/javascript">
+    
+    var
+      nep = new NEP({
+        
+          /**
+           * 登录成功回调
+           * @param  {Object} token - 登录成功后返回的token
+           * @return {None}
+           */
+          onLogin: function(token){
+          },
+
+          /**
+           * 登出回调
+           * @param  {Boolean} success - 是否登出成功
+           * @return {[type]}
+           */
+          onLogout: function(success){              
+          },
+
+          //初始化时是否隐藏登录框
+          //hide: true,
+
+          //登录成功后自动新开页面,通常可以新开页面到控制台
+          //target: url
+      })
+
+      /**
+       * 获取token
+       * @name _$getToken
+       * @param {Function} callback - 回调函数,参数为获取到的token对象
+       * @return {None}
+       * 
+       */
+      //example: nep._$getToken(function(token){})
+
+      /**
+       * 显示登录框
+       * @name _$show
+       * @return {None}
+       */
+      //example nep._$show();
+
+      /**
+       * 隐藏登录框
+       * @name _$hide
+       * @return {None}
+       */
+      //example: nep._$hide();
+
+      /**
+       * 销毁登录框
+       * @name _$close
+       * @return {None}
+       */
+      //example: nep._$close();
+
+      
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

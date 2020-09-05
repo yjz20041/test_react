@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+    <link href="/images/logo2.ico" type="image/x-icon" rel="shortcut icon" />
+    <!--<script type="text/javascript" src="/js/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="/js/lib/angular/angular-ui-router.js"></script>-->
+    <script src="/core.js" ></script>
+    <script src="/test.js" ></script>
+    <title>GitJs</title>	
+
+    <style type="text/css">
+        .clearfix:after{
+            content: '';
+            display: block; clear: both;
+        }
+
+        *{
+            margin: 0; padding: 0;
+        }
+      
+
+
+    </style>
+    <!-- <script type="text/javascript" src="http://test.163.com:8081/js/sdk/nep.js"></script> -->
+<script type="text/javascript" src="http://test.163.com:8081/sdk/nep-0.1.1.min.js"></script>
+    <!--<script type="text/javascript" src="./js/lib/html5media.min.js"></script>
+    <script src="http://c.dun.163yun.com/js/c.js"></script>-->
+</head>
+<body>
+    
+    <div style=" width: 100px; height: 100px; background: yellow;" contenteditable></div>
+    <span style="font-size: 18px; background:red;">123</span>
+    <!-- <iframe name="iframe" id="iframe" src="http://localhost:8081/pages/getToken" ></iframe> -->
+    <a id="getToken">getToken</a>
+    <a id="logout">logout</a>
+    <a id="show">show</a>
+   <!--  <div style="margin-top: 300px;"><span style="background: green; font-size: 200px;  line-height: 20px;">dede</span></div>
+   
+      <div id="test" Yjz="1"></div> -->
+    <!-- <video  controls autoplay   >
+        <source src="https://nos.netease.com/cloud-website-bucket-test/cf886b51-c108-4032-a3a7-6d50f9560976.mp4" type="video/mp4"></source>
+    </video> -->
+    <div class="grandpa">
+        <div class="parent">
+            <div class="prevSibling"></div>
+            <input type="text" id="test" />
+            <div class="nextSibling"></div>
+        </div>
+    </div>
+    <div id="captcha" style="width: 300px; margin: 100px auto;"></div>
+    <div style=" width: 500px; height: 300px;  background: green; display: inline-block; ">
+        
+        <div style="display: inline-block; width: 200px; height: 100px;  background: red;overflow: hidden;">
+            <div style="display: inline-block; width: 20px; height: 50px; background: yellow; vertical-align: middle; overflow:hidden;"></div>
+            <span style="">123我</span>
+            <span style="">456</span>
+            <div>123</div>
+        </div>
+        123
+    </div>
+
+    <div style="width: 200px; height:100px; background: grey;  white-space: pre;">fdasf fdasfdafafadsfdasfsafsafdsa fdasfdasfdsa
+    </div>
+
+    <gtHello></gtHello>
+   
+    <form id="form" method="post" action="http://www.baidu.com" target="a">
+        <input name="a" value = "1" type="hidden" />
+    </form>
+
+	
+	<div gt-controller="helloController">
+		
+		
+		<h1 abc="{{test}}">test:<span>{{test}}</span></h1>
+        
+        <a href="#home">home</a>
+        <a href="#home/book">book</a>
+        <a href="#home/food">food</a>
+
+        <div gt-view="a">
+            1123123
+            <div gt-view="b">
+                
+            </div>
+
+        </div>
+        		
+	</div> 
+	
+	<iframe id="getTokenIframe" ></iframe>
+
+    	
+</body>
+
+<script type="text/template" id="template">
+    <h1><%=title%></h1>
+    <div><%=content%></div>
+</script>
+
+
+<!-- <script type="text/javascript" src="/js/lib/requirejs/require.js" data-main="/js/main.js"></script>  -->
+
+<script>
+
+     var g = 2;
+     console.log(window.g)
+
+    //console.log(window.devicePixelRatio)
+    var
+        nGetTokenIframe = document.getElementById('getTokenIframe');
+
+   /* nGetTokenIframe.onload = function(){
+        console.log('onload')
+    }
+    nGetTokenIframe.src = 'http://www.baidu.com';
+
+    setTimeout(function(){
+        nGetTokenIframe.src = 'http://www.baidu.com'
+    }, 5000)*/
+    
+    /*window.onmessage = function(evt){
+        console.log(evt.data)
+    }*/
+
+
+    function NEP (){}
+
+
+    var
+        nep = new NEP({ 
+            onLogin: function(){
+                nep._$hide();
+            },
+            onLogout: function(){
+                
+            },
+            hide: true,
+            //target: 'http://www.baidu.com'
+        })
+    var
+        nGetToken = document.getElementById('getToken'),
+        nLogout = document.getElementById('logout'),
+        nShow = document.getElementById('show');
+
+    nGetToken.onclick = function(){
+        console.log(123)
+       nep._$getToken(function(data){
+             console.log(data)
+        });
+        //nGetTokenIframe.contentWindow.postMessage('getToken', '*')
+      
+    }
+
+    nLogout.onclick = function(){
+       nep._$logout(); 
+    }
+
+    function openNewBackgroundTab(){
+        var a = document.createElement("a");
+        a.href = "http://www.google.com/";
+        a.target = "_blank";
+        var evt = document.createEvent("MouseEvents");
+        //the tenth parameter of initMouseEvent sets ctrl key
+        evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0,
+                                    true, false, false, false, 0, null);
+        a.dispatchEvent(evt);
+        window.focus();
+    }
+
+    nShow.onclick = function(){
+       nep._$show(); 
+      
+      // window.focus()
+      //openNewBackgroundTab()
+    }
+
+    //console.log(window.requestAnimationFrame)
+    function animation(time){
+        console.log(time)
+        requestAnimationFrame(animation)
+    }
+
+    
+
+    //animation()
+
+    
+    // window.onmessage = function(event){
+    //     console.log(JSON.parse(event.data))
+    // }
+
+//     document.addEventListener('focus', function(){
+//         console.log('document focus')
+//     }, true)
+//    var
+//     nTest = document.getElementById('test');
+// nTest.focus();
+    // var
+    //     nCaptcha = document.getElementById('captcha');
+    // var opts = {
+    //       "element": nCaptcha, // 可以是验证码容器id，也可以是HTMLElement
+    //       "captchaId": "824eba363ccb42358288fd8496217483", // 这里填入申请到的验证码id
+    //       "width": 320 // 验证码组件显示宽度
+    //     }
+    // new NECaptcha(opts); 
+// var
+//     nTest = document.getElementById('test');
+// //console.log(nTest.getAttribute('YJZ'))
+
+// var
+//     str = 'yjz abc',
+//     reg = /(\w(\w(\w)))/ig;
+
+// str.replace(reg, function(){
+//     //console.log(arguments)
+// })
+
+
+
+/*str.replace(reg, function(match){
+    
+})*/
+	/*var app = angular.module('app', ['ui.router']);
+   
+    app.config(['$stateProvider', function($stateProvider){
+    	$stateProvider
+    	.state('home', {
+    		url: '/home',
+            views: {
+                a:{}
+            }
+    	})
+    	.state('home.book', {
+    		url: '/book',  
+            views: {
+
+                b: {
+                    template:'<h2>hello i am  book</h2>'
+                }
+            } 		
+                    
+                
+    		
+    	})
+        .state('home.food', {
+            url: '/food',            
+            views: {
+                
+                b: {
+                    template:'<h2>hello i am  food</h2>'
+                }
+            }       
+                
+            
+        })
+
+    }]);
+
+    
+  
+
+    angular.bootstrap(document, ['app']);*/
+   
+</script>
+</html>

@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./ts",
+    "target": "es5",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "jsx": "preserve",
+    "isolatedModules": true
+  },
+  "include": [
+  ]
+}
