@@ -114,6 +114,7 @@ module.exports = (env = {}, argv) => {
 
     config.devServer = {
         contentBase: DIST_PATH,
+        host: '0.0.0.0',
         compress: true,
         port: 9528,
         hot: false,

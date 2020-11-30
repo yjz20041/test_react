@@ -28,6 +28,8 @@
 // // Object.assign({});
 import React from 'react/lib/React';
 import ReactDom from 'react-dom';
+
+import mnb from '@music/mnb';
 class A extends React.PureComponent {
     constructor(props) {
       super(props);
@@ -39,16 +41,25 @@ class A extends React.PureComponent {
       console.log('will update')
     }
     onIncrement() {
-      this.setState({
-        count: this.state.count + 1
-      })
-      this.setState({
-        count: this.state.count + 2
-      })
+      //mnb.close();
+      alert(1);
+      mnb.open({url: 'moyi://nmy/login/main'});
+      // this.setState({
+      //   count: this.state.count + 1
+      // })
+      // this.setState({
+      //   count: this.state.count + 2
+      // }, function aaa() {
+      //   this.setState({
+      //     count: this.state.count + 3
+      //   })
+      // })
     }
     render() {
+      const T = 'aaa';
       return <div>
         <div>{this.state.count}</div>
+        <T>123</T>
         <button onClick={() => this.onIncrement()}>increment</button>
       </div>
     }
