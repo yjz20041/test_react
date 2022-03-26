@@ -76,9 +76,314 @@ const quickSort = (arr, start = 0, end = arr.length - 1) => {
   return arr;
 }
 
-3  1  2  4
+// 二叉树中序遍历
+const inorderTranversal = (root) => {
+  if (!root) return [];
+  const ret = [];
+  const {
+    left,
+    rigth,
+    val
+  } = root;
+  if (left) {
+    ret = ret.concat(inorderTranversal(left));
+  }
+  ret.push(val);
+  if (right) {
+    ret = ret.concat(inorderTranversal(right));
+  }
+  return ret;
+}
 
-2 1 3 4
+// 最大子序列和
+const maxSubArr = (arr) => {
+  // 以index结尾的最大子序列和
+  const dp = [];
+  dp[0] = arr[0];
+  let max = arr[0];
+  for (let i = 1; i < arr.legnth; i++) {
+    dp[i] = arr[i] + Math.max(dp[i-1], 0);
+    max = Math.max(max, dp[i]);
+  }
+  return max;
+}
+
+// 爬楼梯付体力
+const climbStair = (costs) => {
+  const dp = [];
+  dp[0] = 0;
+  dp[1] = 0;
+  for (let i = 2; i < costs.length; i++) {
+    dp[i] = Math.min(dp[i - 1] + costs[i-1], dp[i - 2] + costs[i - 2])
+  }
+}
+
+// 
+const stockProfit = (arr) => {
+  const dp = [];
+  for (let i = 0; i < arr.length; i++) {
+    dp.push([])
+  };
+  dp[0][0] = 0;
+  dp[0][1] = -arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1] + arr[i] - fee);
+    dp[i][1] = Math.max(dp[i-1][0] - arr[i], dp[i - 1][1]);
+  }
+  return dp[arr.length - 1][0];
+}
+
+
+// 
+
+/**
+ * 
+
+  dp[i][0] = Math.max(dp[i-1][0], dp[i-1][1])
+  dp[i][1] = dp[i-1][0] + arr[i]
+ */
+
+const message = (arr) => {
+    const dp = [];
+    const dp = [];
+    for (let i = 0; i < arr.length; i++) {
+      dp.push([])
+    };
+    dp[0][0] = 0;
+    dp[0][1] = Math.max(arr[0], arr[1]);
+    for (let i = 2; i < arr.length; i++) {
+      dp[i] = dp[i - 2]
+    }
+}
 
 
 
+// 串行all
+const serialAll = (arr) => {
+  return new Promise((resolve, reject) => {
+    const ret = [];
+    const current = arr.pop();
+    current.then(data => {
+      ret.push(data);
+      if (arr.length) {
+        serialAll(arr).then(otherData => {
+          resolve(ret.concat(otherData));
+        }).catch(e => reject(e));
+      } else {
+        resolve(ret);
+      }
+    }).catch(e => reject(e))
+  });
+}
+
+
+
+serialAll([
+
+  new Promise(resolve => {
+    setTimeout(() => {
+      console.log(1);
+      resolve();
+    }, 1000)
+  }),
+  new Promise(resolve => {
+    setTimeout(() => {
+      console.log(2);
+      resolve();
+    }, 1000)
+  })
+
+])
+
+class Flow {
+  constructor(arr) {
+    this.queue = arr ? arr.flat() : [];
+  }
+
+  startTask() {
+    const task = this.queue.shift();
+    return new Promise((resolve) => {
+      // 嵌套
+      if (task instanceof Flow) {
+        task.run(resolve);
+      } else {
+        const fn = task();
+        if (fn instanceof Promise) {
+          fn.then(resolve);
+        }  else {
+          resolve();
+        }
+      }
+    })
+  }
+
+  run(cb) {
+    if (this.queue.length) {
+      this.startTask().then(() => this.run(cb))
+    } else {
+      cb();
+    }
+  }
+}
+
+const createFlow = (arr) => {
+  
+  return new Flow(arr)
+}
+
+
+// 
+
+const bofei = (count) => {
+  const ret = [];
+  ret[0] = 1;
+  ret[1] = 1;
+  for (let i = 2; i < count; i++) {
+    ret[i] = ret[i - 1] + ret[i - 2];
+  }
+  return ret;
+}
+
+
+const n = (fn) => {
+  const obj = Object();
+  obj.constructor = fn;
+  fn.call(obj);
+  return obj;
+}
+
+
+const bubble = (arr) => {
+  const l = arr.length;
+  for (let i = l - 1;  i > 0; i--) {
+    for (let j = 0; j < i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        const temp = arr[j+1];
+        arr[j + 1] = arr[j];
+        arr[j] = temp;
+      }
+    }
+  }
+  return arr;
+}
+
+const bubble2 = (arr) => {
+  const l = arr.length;
+  for (let i = 0; i < l; i++) {
+    for (let j = 0; j < l - i - 1; j++) {
+
+    }
+  }
+}
+
+
+const flat = (arr) => {
+  const ret = [];
+  for (let i = 0; i < arr.length; i++) {
+    const item = arr[i];
+    if (Array.isArray(item)) {
+      ret = ret.concat(flat(item));
+    } else ret.push(item);
+  }
+  return ret;
+}
+
+const flat2 = (arr) => {
+  const ret = [];
+  while(arr.length) {
+    const v = arr.shift();
+    if (Array.isArray(v)) {
+      arr.unshift(v);
+    } else {
+      ret.push(v);
+    }
+  }
+  return ret;
+}
+
+
+
+
+[
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+]
+
+// 2,0
+// 1,0
+
+// 2,1
+// 0 0
+
+// 2 2
+
+// 0 1
+
+
+function slantIteration (arr) {
+  ret = [];
+
+  let startRow = arr.length - 1;
+  let startCol = 0;
+  let row = startRow;
+  let col = startCol;
+  let ele = arr[row][col];
+
+  while(ele !== undefined) {
+    ret.push(ele);
+    if (row + 1 > arr.length - 1 || col + 1 > arr.length - 1) {
+      startRow--;
+      if (startRow < 0) {
+        startRow = 0;
+        startCol++;
+      }
+      row = startRow;
+      col = startCol;
+    } else {
+      row++;
+      col++;
+    }
+    ele = arr[row][col]
+  }
+  return ret;
+}
+
+
+// circularDep
+
+/**
+ * 
+ * var m1 = { name: 'm1', deps: [m2]}
+ * 
+ * 
+ * 
+ */
+ var arr = [
+  { id: 'm1', deps: ['m2', 'm22']},
+  { id: 'm2', deps: ['m3', 'm4']},
+  { id: 'm22', deps: ['m3', 'm4']},
+  { id: 'm3', deps: ['m1']},
+  { id: 'm4', deps: []}
+ ]
+
+function circularDep (arr) {
+  const isCircular = (o, depList = []) => {
+    if (depList.indexOf(o.id) >= 0) {
+      return true;
+    } else {
+      depList.push(o.id);
+    }
+    if (o.deps.length) {
+      return o.deps.some(id => {
+        const item = arr.find(m => m.id === id);
+        if (item) {
+          return isCircular(item, depList.slice())
+        }
+        return false;
+      })
+    }
+    return false;
+  }
+  return arr.some(item => isCircular(item));
+}

@@ -12,7 +12,7 @@ gulp.task('server', function(){
         // host: '10.242.14.203',
         // host: '0.0.0.0',
         // port: 8033,
-        host: '10.242.231.98',
+        // host: '0.0.0.0',
         port: 8003,
         //livereload: true,
         //directoryListing: true,

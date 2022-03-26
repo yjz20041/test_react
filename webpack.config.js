@@ -63,7 +63,9 @@ module.exports = (env = {}, argv) => {
     ];
     // 插件
     const plugins = [
-        new HtmlPlugin(),
+        new HtmlPlugin({
+            template: './index.html'
+        }),
         new MiniCssExtractPlugin({
             filename: '[name][hash:8].css',
             chunkFilename: '[id][hash:8].css'
