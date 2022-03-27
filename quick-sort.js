@@ -387,3 +387,65 @@ function circularDep (arr) {
   }
   return arr.some(item => isCircular(item));
 }
+
+// arry plus
+
+// [1,2,-1,3,4, 5, 6, -8]
+
+// force
+
+const arrayPlus = (arr) => {
+  const l = arr.length;
+  const ret = [];
+  for (let i = 0; i < l; i++) {
+    for (let j = i + 1; j < l; j++) {
+      for (let k = j + 1; k < l; k++) {
+        if (arr[i] + arr[j] + arr[k] === 0) {
+          ret.push([arr[i], arr[j], arr[k]]);
+        }
+      }
+    }
+  }
+  return ret;
+}
+
+// 
+
+const arrayPlus2 = (arr) => {
+  arr = arr.sort((a, b) => a - b);
+  let last = arr.findIndex(item => item < 0);
+  const map = {};
+  arr.forEach(item => {
+    map[item] = item;
+  });
+  const ret = [];
+  for (let i = 0; i <= last; i++) {
+    if (arr[i] === arr[i - 1]) {
+      continue;
+    }
+    for (let j = arr.length - 1; j > last; j--) {
+      const match = map[-(arr[i] + arr[j])];
+      if (match !== undefined) {
+        ret.push([arr[i], arr[j], match]);
+      }
+    }
+  }
+  return ret;
+}
+
+// reduce
+const reduce = (arr, callback, initValue) => {
+  let prev = initValue;
+  for (let i = 0; i < arr.length; i++) {
+    prev = callback(prev, arr[i]);
+  }
+  return prev;
+}
+
+Array.prototype.bbb = function (callback, initValue) {
+  let prev = initValue;
+  for (let i = 0; i < this.length; i++) {
+    prev = callback(prev, this[i]);
+  }
+  return prev;
+}
